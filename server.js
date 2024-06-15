@@ -33,7 +33,31 @@ app.post('/api/send-email',(req,res)=>{
         html:text
     }
 
-    sgMail.send(msg).then(()=>{console.log('Email sent')}).catch((error)=>{console.error(error)});
+    sgMail.send(msg)
+    .then(()=>{
+        console.log('Email sent');
+        res.status(200).json({message:'Delivered the mail'});
+    })
+    .catch((error)=>{console.error(error)});
+
+});
+
+app.post('/api/contact-us',(req,res)=>{
+
+    const {to,subject,text}=req.body;
+    const msg={
+        to:to,
+        from:'support@greenocleaner.in',
+        subject:subject,
+        html:text
+    }
+
+    sgMail.send(msg)
+    .then(()=>{
+        console.log('Email sent');
+        res.status(200).json({message:'Delivered the mail'});
+    })
+    .catch((error)=>{console.error(error)});
 
 });
 
