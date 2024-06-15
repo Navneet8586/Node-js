@@ -26,35 +26,11 @@ app.use(express.static('laundry'));
 app.post('/api/send-email',(req,res)=>{
 
     const {to,subject,text}=req.body;
-    // const transporter=nodemailer.createTransport({
-    //     service:'gmail',
-    //     auth:{
-    //         user:'grenocleaners@gmail.com',
-    //         pass:'rahulRRR@9818'
-    //     }
-    // });
-
-    // const mailOptions={
-    //     from:'grenocleaners@gmail.com',
-    //     to:to,
-    //     subject:subject,
-    //     text:text
-    // }
-    // transporter.sendMail(mailOptions,(error,info)=>{
-    //     if(error){
-    //         console.log(error);
-    //     } else{
-    //         console.log(info.response);
-    //         res.send('Email sent');
-    //     }
-    // });
-
     const msg={
         to:to,
         from:'support@greenocleaner.in',
         subject:subject,
-        text:text,
-        html:'<p>Oye order ho gya</p>'
+        html:text
     }
 
     sgMail.send(msg).then(()=>{console.log('Email sent')}).catch((error)=>{console.error(error)});
