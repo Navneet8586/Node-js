@@ -62,6 +62,19 @@ app.post('/api/contact-us',(req,res)=>{
 });
 
 app.get('/ratings',(req,res)=>{
+    pool.query('SELECT * from Rating ORDER BY time DESC LIMIT 10',(error,result)=>{
+        if(error){
+            console.log('error is there',error);
+            res.status(500).json({
+                error:'Internal Server Error'
+            });
+        }else{
+            res.json(result);
+        }
+    })
+});
+//
+app.get('/overall-ratings',(req,res)=>{
     pool.query('SELECT * from Rating',(error,result)=>{
         if(error){
             console.log('error is there',error);
