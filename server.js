@@ -1,23 +1,23 @@
 const express=require('express');
 const mysql=require('mysql2');
-// const nodemailer=require('nodemailer');
 const sgMail=require('@sendgrid/mail');
 
 const app=express();
 const cors=require('cors');
-//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
-
+const dotenv=require('dotenv');
 
 const port=process.env.PORT || 3000;
-sgMail.setApiKey('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');
+const envFile='.env';
+dotenv.config({path:envFile})
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 
 const pool=mysql.createPool({
     connectionLimit:10,
-    host:'localhost',
-    user:'root',
-    password:'Monika85@%',
-    database:'laundry_rating'
+    host:process.env.DB_HOST,
+    user:process.env.DB_USER,
+    password:process.env.DB_PASS,
+    database:process.env.DB_DATABASE
 });
 app.use(cors());
 app.use(express.json());
@@ -61,7 +61,7 @@ app.post('/api/contact-us',(req,res)=>{
 
 });
 
-app.get('/ratings',(req,res)=>{
+app.get('/api/ratings',(req,res)=>{
     pool.query('SELECT * from Rating ORDER BY time DESC LIMIT 10',(error,result)=>{
         if(error){
             console.log('error is there',error);
@@ -74,7 +74,7 @@ app.get('/ratings',(req,res)=>{
     })
 });
 //
-app.get('/overall-ratings',(req,res)=>{
+app.get('/api/overall-ratings',(req,res)=>{
     pool.query('SELECT * from Rating',(error,result)=>{
         if(error){
             console.log('error is there',error);
