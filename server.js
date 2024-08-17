@@ -7,8 +7,8 @@ const cors=require('cors');
 const dotenv=require('dotenv');
 
 const port=process.env.PORT || 3000;
-const envFile='.env';
-dotenv.config({path:envFile})
+// const envFile='.env';
+// dotenv.config({path:envFile})
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 
